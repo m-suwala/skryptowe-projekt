@@ -50,28 +50,29 @@ def get_list_of_ingredients():
 def get_meals_info_list(meal):
     meals = meal.json()['meals']
     meals_list = []
-    for m in meals:
-        name = m['strMeal']
-        category = m['strCategory']
-        cuisine = m['strArea']
-        instructions = format_text(m['strInstructions'])
-        image = m['strMealThumb']
-        ingredients = ""
-        for i in range(1, 21):
-            ingr = m['strIngredient{}'.format(i)]
-            amount = m['strMeasure{}'.format(i)]
-            if ingr != "" and amount != "":
-                ingredients += ingr + " " + amount + "\n"
-            else:
-                break
-        meals_list.append({"name": name, "category": category, "cuisine": cuisine, "ingredients": ingredients, "instructions": instructions, "image": image})
+    if meals:
+        for m in meals:
+            name = m['strMeal']
+            category = m['strCategory']
+            cuisine = m['strArea']
+            instructions = format_text(m['strInstructions'])
+            image = m['strMealThumb']
+            ingredients = ""
+            for i in range(1, 21):
+                ingr = m['strIngredient{}'.format(i)]
+                amount = m['strMeasure{}'.format(i)]
+                if ingr != "" and amount != "":
+                    ingredients += ingr + " " + amount + "\n"
+                else:
+                    break
+            meals_list.append({"name": name, "category": category, "cuisine": cuisine, "ingredients": ingredients, "instructions": instructions, "image": image})
     return meals_list
 
 
 def format_text(text):
     result = ""
     words = text.split(" ")
-    for i in range(30, len(text), 30):
+    for i in range(30, len(text), 35):
         words.insert(i, "\n")
     for i in range(0, len(words)):
         result += words[i] + " "
