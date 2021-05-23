@@ -10,37 +10,67 @@ def get_meals(name):
         return None
 
 
-def get_meals_starting_with(letter):
+def get_meal(id):
     try:
-        return requests.get("https://www.themealdb.com/api/json/v1/1/search.php?f={}".format(letter))
+        meal = requests.get("https://www.themealdb.com/api/json/v1/1/lookup.php?i={}".format(id))
+        meal_info = get_meals_info_list(meal)
+        return meal_info
+    except requests.exceptions.MissingSchema:
+        return None
+
+def get_random_meal():
+    try:
+        meal = requests.get("https://www.themealdb.com/api/json/v1/1/random.php")
+        meal_info = get_meals_info_list(meal)
+        return meal_info
+    except Exception:
+        return None
+
+
+def get_meals_by_category(category):
+    try:
+        meals = requests.get("https://www.themealdb.com/api/json/v1/1/filter.php?c={}".format(category))
+        return meals.json()['meals']
     except requests.exceptions.MissingSchema:
         return None
 
 
-def get_random_meal():
+def get_meals_by_ingredient(ingredient):
     try:
-        return requests.get("https://www.themealdb.com/api/json/v1/1/random.php")
-    except Exception:
+        meals = requests.get("https://www.themealdb.com/api/json/v1/1/filter.php?i={}".format(ingredient))
+        return meals.json()['meals']
+    except requests.exceptions.MissingSchema:
+        return None
+
+
+def get_meals_by_cuisine(cuisine):
+    try:
+        meals = requests.get("https://www.themealdb.com/api/json/v1/1/filter.php?a={}".format(cuisine))
+        return meals.json()['meals']
+    except requests.exceptions.MissingSchema:
         return None
 
 
 def get_list_of_categories():
     try:
-        return requests.get("https://www.themealdb.com/api/json/v1/1/list.php?c=list")
+        categories = requests.get("https://www.themealdb.com/api/json/v1/1/list.php?c=list").json()
+        return categories['meals']
     except Exception:
         return None
 
 
 def get_list_of_cuisines():
     try:
-        return requests.get("https://www.themealdb.com/api/json/v1/1/list.php?a=list")
+        cuisines = requests.get("https://www.themealdb.com/api/json/v1/1/list.php?a=list").json()
+        return cuisines['meals']
     except Exception:
         return None
 
 
 def get_list_of_ingredients():
     try:
-        return requests.get("https://www.themealdb.com/api/json/v1/1/list.php?i=list")
+        ingredients = requests.get("https://www.themealdb.com/api/json/v1/1/list.php?i=list").json()
+        return ingredients['meals']
     except Exception:
         return None
 
@@ -62,7 +92,7 @@ def get_meals_info_list(meal):
                 ingr = m['strIngredient{}'.format(i)]
                 amount = m['strMeasure{}'.format(i)]
                 if ingr != "" and amount != "":
-                    ingredients += ingr + " " + amount + "\n"
+                    ingredients += amount + " " + ingr + "\n"
                 else:
                     break
             meals_list.append({"name": name, "category": category, "cuisine": cuisine, "ingredients": ingredients, "instructions": instructions, "image": image})
