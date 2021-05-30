@@ -85,28 +85,19 @@ def get_meals_info_list(meal):
             name = m['strMeal']
             category = m['strCategory']
             cuisine = m['strArea']
-            instructions = format_text(m['strInstructions'])
+            instructions = m['strInstructions']
             image = m['strMealThumb']
-            ingredients = ""
+            ingredients = []
             for i in range(1, 21):
                 ingr = m['strIngredient{}'.format(i)]
                 amount = m['strMeasure{}'.format(i)]
                 if ingr != "" and amount != "":
-                    ingredients += amount + " " + ingr + "\n"
+                    ingredient = amount + " " + ingr
+                    ingredients.append(ingredient)
                 else:
                     break
             meals_list.append({"name": name, "category": category, "cuisine": cuisine, "ingredients": ingredients, "instructions": instructions, "image": image})
     return meals_list
-
-
-def format_text(text):
-    result = ""
-    words = text.split(" ")
-    for i in range(30, len(text), 35):
-        words.insert(i, "\n")
-    for i in range(0, len(words)):
-        result += words[i] + " "
-    return result
 
 
 def print_meals(meals):
@@ -114,7 +105,5 @@ def print_meals(meals):
         print("name: " + m['name'])
         print("category: " + m['category'])
         print("cuisine: " + m['cuisine'])
-        print("ingredients: ")
-        for ingr, amount in m["ingredients"]:
-            print(amount, ingr)
+        print("ingredients: " + m['ingredients'])
         print("instructions: " + m['instructions'])
