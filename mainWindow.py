@@ -10,6 +10,7 @@ from editProfile import Ui_Form
 import user
 from mongoengine import *
 
+
 class MainWindow():
     def __init__(self):
         app = QtWidgets.QApplication(sys.argv)
@@ -21,7 +22,6 @@ class MainWindow():
         self.is_logged = False
         self.username = None
         sys.exit(app.exec_())
-
 
     def update_buttons(self):
         self.ui.random_pushButton.clicked.connect(self.open_random_recipe)
@@ -41,14 +41,11 @@ class MainWindow():
         self.ui.faverror_label.hide()
         self.ui.edit_profile_button.hide()
 
-
-
     def hide_errors(self):
         self.ui.faverror_label.hide()
         self.ui.error_label.hide()
         self.ui.loginerror_label.hide()
         self.ui.faverror_label.hide()
-
 
     def open_random_recipe(self):
         try:
@@ -63,14 +60,12 @@ class MainWindow():
         except Exception as e:
             print(e)
 
-
     def open_categories(self):
         self.hide_errors()
         self.Category = QtWidgets.QWidget()
         self.category = Ui_Categories()
         self.category.setupUi(self.Category, self.is_logged, username=self.username)
         self.Category.show()
-
 
     def open_cuisines(self):
         self.hide_errors()
@@ -146,7 +141,6 @@ class MainWindow():
         self.ui.faverror_label.hide()
         self.ui.edit_profile_button.hide()
 
-
     def create_acc(self):
         self.hide_errors()
         login = self.ui.login_lineEdit.text()
@@ -172,7 +166,6 @@ class MainWindow():
                 self.ui.loginerror_label.setText("Error, please try again")
                 self.ui.loginerror_label.show()
 
-
     def go_to_favs(self):
         self.hide_errors()
         try:
@@ -187,7 +180,6 @@ class MainWindow():
                 self.ui.faverror_label.show()
         except Exception:
             pass
-
 
     def logout(self):
         self.hide_errors()

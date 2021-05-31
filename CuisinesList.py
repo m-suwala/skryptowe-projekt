@@ -41,7 +41,6 @@ class Ui_Cuisines(object):
         self.retranslateUi(Cuisines)
         QtCore.QMetaObject.connectSlotsByName(Cuisines)
 
-
     def open_recipes(self):
         cuisine = self.cuisines_list.currentItem()
         meals = api.get_meals_by_cuisine(cuisine.text())
@@ -49,7 +48,6 @@ class Ui_Cuisines(object):
         self.recipe = RecipeWindow(self.window, 0, is_logged=self.is_logged, username=self.username, names=meals)
         self.recipe.load_recipe()
         self.window.show()
-
 
     def retranslateUi(self, Cuisines):
         _translate = QtCore.QCoreApplication.translate

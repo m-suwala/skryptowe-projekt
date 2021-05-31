@@ -4,6 +4,7 @@ import urllib.request
 import api_functions as api
 import user
 
+
 class RecipeWindow():
     def __init__(self, window, id, is_logged, username, meals=None, names=None, ids=None):
         self.ui = Ui_Form()
@@ -19,7 +20,6 @@ class RecipeWindow():
         self.not_fav_icon = QtGui.QIcon()
         self.not_fav_icon.addPixmap(QtGui.QPixmap("notfav.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.update_buttons()
-
 
     def update_buttons(self):
         self.ui.next_pushButton.clicked.connect(self.next_recipe)
@@ -45,7 +45,6 @@ class RecipeWindow():
         self.ui.fav_button.setIcon(self.fav_icon)
         user.add_to_fav(self.username, self.meal['id'])
         self.ui.fav_button.clicked.connect(self.unfav)
-
 
     def unfav(self):
         self.ui.fav_button.setIcon(self.not_fav_icon)

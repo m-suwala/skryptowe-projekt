@@ -36,6 +36,7 @@ def login(login, password):
     except Exception:
         pass
 
+
 def add_to_fav(login, meal_id):
     try:
         user = User.objects(login=login).first()
@@ -47,6 +48,7 @@ def add_to_fav(login, meal_id):
     except Exception:
         pass
 
+
 def remove_from_fav(login, meal_id):
     try:
         user = User.objects(login=login).first()
@@ -55,12 +57,14 @@ def remove_from_fav(login, meal_id):
     except Exception:
         pass
 
+
 def is_fav(login, meal_id):
     try:
         user = User.objects(login=login).first()
         return meal_id in user.favs
     except Exception:
         pass
+
 
 def get_favs(login):
     try:
@@ -78,13 +82,11 @@ def get_diet(login):
         pass
 
 
-def change_password(login, current_password, new_password):
+def change_password(login, new_password):
     try:
         user = User.objects(login=login).first()
-        curr_pass = bytes(current_password, 'utf-8')
         if user:
-            passw = bytes(user.password, 'utf-8')
-            if bcrypt.checkpw(curr_pass, passw) and len(new_password) >= 8:
+            if len(new_password) >= 8:
                 new_pass = bytes(new_password, 'utf-8')
                 hashed = bcrypt.hashpw(new_pass, bcrypt.gensalt())
                 user.update(password=hashed.decode())
@@ -93,6 +95,15 @@ def change_password(login, current_password, new_password):
         return False
     except Exception:
         return False
+
+
+def check_password(login, current_password):
+    user = User.objects(login=login).first()
+    curr_pass = bytes(current_password, 'utf-8')
+    if user:
+        passw = bytes(user.password, 'utf-8')
+        return bcrypt.checkpw(curr_pass, passw)
+    return False
 
 
 def clear_fav(login):

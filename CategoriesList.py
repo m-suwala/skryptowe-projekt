@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import api_functions as api
 from recipeWindow import RecipeWindow
 
+
 class Ui_Categories(object):
     def setupUi(self, Categories, is_logged, username):
         self.is_logged = is_logged
@@ -47,7 +48,7 @@ class Ui_Categories(object):
         self.recipe = RecipeWindow(self.window, 0, is_logged=self.is_logged, username=self.username, names=meals)
         self.recipe.load_recipe()
         self.window.show()
-
+        
     def retranslateUi(self, Categories):
         _translate = QtCore.QCoreApplication.translate
         Categories.setWindowTitle(_translate("Categories", "Categories"))

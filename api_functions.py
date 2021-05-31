@@ -1,6 +1,7 @@
 import requests
 import random
 
+
 def get_meals(name):
     try:
         meals = requests.get("https://www.themealdb.com/api/json/v1/1/search.php?s={}".format(name))
@@ -113,12 +114,3 @@ def get_meals_info_list(meal):
                     break
             meals_list.append({"id": id, "name": name, "category": category, "cuisine": cuisine, "ingredients": ingredients, "instructions": instructions, "image": image})
     return meals_list
-
-
-def print_meals(meals):
-    for m in meals:
-        print("name: " + m['name'])
-        print("category: " + m['category'])
-        print("cuisine: " + m['cuisine'])
-        print("ingredients: " + m['ingredients'])
-        print("instructions: " + m['instructions'])

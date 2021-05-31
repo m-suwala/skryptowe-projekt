@@ -210,16 +210,16 @@ class Ui_Form(object):
         self.pass_change_info_label.hide()
         current_pass = self.current_pass.text()
         new_pass = self.new_pass.text()
-        if len(new_pass) < 8:
-            self.pass_change_info_label.setText("New password is too short")
-            self.pass_change_info_label.show()
-        else:
-            if user.change_password(self.username, current_pass, new_pass):
+        if user.check_password(self.username, current_pass):
+            if user.change_password(self.username, new_pass):
                 self.pass_change_info_label.setText("Password has been changed")
                 self.pass_change_info_label.show()
             else:
-                self.pass_change_info_label.setText("Wrong password")
+                self.pass_change_info_label.setText("New password is too short")
                 self.pass_change_info_label.show()
+        else:
+            self.pass_change_info_label.setText("Wrong password")
+            self.pass_change_info_label.show()
 
     def clear_fav(self):
         self.cleared_list_label.hide()
@@ -227,7 +227,6 @@ class Ui_Form(object):
         self.pass_change_info_label.hide()
         user.clear_fav(self.username)
         self.cleared_list_label.show()
-
 
     def choose_diet(self):
         new_diet = self.diet_list.currentText()
@@ -248,4 +247,3 @@ class Ui_Form(object):
         self.pass_change_info_label.setText(_translate("Form", "Password has been changed"))
         self.cleared_list_label.setText(_translate("Form", "List cleared"))
         self.changed_diet_label.setText(_translate("Form", "Diet changed"))
-
