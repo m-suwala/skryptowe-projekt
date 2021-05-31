@@ -48,17 +48,15 @@ class MainWindow():
         self.ui.faverror_label.hide()
 
     def open_random_recipe(self):
-        try:
-            self.hide_errors()
-            self.window = QtWidgets.QMainWindow()
-            if not self.is_logged or user.get_diet(self.username) == "None":
-                self.recipe = RecipeWindow(self.window, 0, is_logged=self.is_logged, username=self.username, meals=api.get_random_meal())
-            else:
-                self.recipe = RecipeWindow(self.window, 0, is_logged=self.is_logged, username=self.username, names=api.get_random_meal_diet(user.get_diet(self.username)))
-            self.recipe.load_recipe()
-            self.window.show()
-        except Exception as e:
-            print(e)
+        self.hide_errors()
+        self.window = QtWidgets.QMainWindow()
+        if not self.is_logged or user.get_diet(self.username) == "None":
+            self.recipe = RecipeWindow(self.window, 0, is_logged=self.is_logged, username=self.username, meals=api.get_random_meal())
+        else:
+            self.recipe = RecipeWindow(self.window, 0, is_logged=self.is_logged, username=self.username, names=api.get_random_meal_diet(user.get_diet(self.username)))
+        self.recipe.load_recipe()
+        self.window.show()
+
 
     def open_categories(self):
         self.hide_errors()
@@ -159,8 +157,7 @@ class MainWindow():
             except NotUniqueError:
                 self.ui.loginerror_label.setText("This login is already taken")
                 self.ui.loginerror_label.show()
-            except Exception as e:
-                print(e)
+            except Exception:
                 self.ui.loginerror_label.setText("Error, please try again")
                 self.ui.loginerror_label.show()
 

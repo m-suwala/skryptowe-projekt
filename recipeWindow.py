@@ -25,13 +25,11 @@ class RecipeWindow():
         self.ui.next_pushButton.clicked.connect(self.next_recipe)
         self.ui.previous_pushButton.clicked.connect(self.prev_recipe)
         self.ui.fav_button.clicked.connect(self.fav)
-        try:
-            if self.is_logged:
-                self.ui.fav_button.show()
-            else:
-                self.ui.fav_button.hide()
-        except Exception as e:
-            print(e)
+        if self.is_logged:
+            self.ui.fav_button.show()
+        else:
+            self.ui.fav_button.hide()
+
 
     def next_recipe(self):
         self.id += 1

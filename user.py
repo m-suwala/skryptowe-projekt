@@ -3,8 +3,8 @@ import bcrypt
 
 try:
     connect(host="mongodb+srv://Monika:drzewo123@cluster0.szlzs.mongodb.net/skryptowe?retryWrites=true&w=majority")
-except Exception as e:
-    print(e)
+except Exception:
+    pass
 
 
 class User(Document):
@@ -111,8 +111,8 @@ def clear_fav(login):
         user = User.objects(login=login).first()
         user.update(favs=[])
         user.save()
-    except Exception as e:
-        print(e)
+    except Exception:
+        pass
 
 
 def change_diet(login, new_diet):
@@ -120,5 +120,5 @@ def change_diet(login, new_diet):
         user = User.objects(login=login).first()
         user.update(diet=new_diet)
         user.save()
-    except Exception as e:
-        print(e)
+    except Exception:
+        pass
