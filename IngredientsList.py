@@ -4,7 +4,9 @@ from recipeWindow import RecipeWindow
 
 
 class Ui_Ingredients(object):
-    def setupUi(self, Ingredients):
+    def setupUi(self, Ingredients, is_logged, username):
+        self.is_logged = is_logged
+        self.username = username
         Ingredients.setObjectName("Ingredients")
         Ingredients.resize(400, 600)
         Ingredients.setStyleSheet("background-color: rgb(212, 237, 255);\n"
@@ -56,7 +58,7 @@ class Ui_Ingredients(object):
         meals = api.get_meals_by_ingredient(ingredient.text())
         if meals:
             self.window = QtWidgets.QMainWindow()
-            self.recipe = RecipeWindow(self.window, meals, 0, is_meal=False)
+            self.recipe = RecipeWindow(self.window, 0, is_logged=self.is_logged, username=self.username, names=meals)
             self.recipe.load_recipe()
             self.window.show()
         else:
@@ -68,12 +70,3 @@ class Ui_Ingredients(object):
         self.ingredients_label.setText(_translate("Ingredients", "Ingredients:"))
         self.error_label.setText(_translate("Ingredients", "no recipes found"))
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Ingredients = QtWidgets.QWidget()
-    ui = Ui_Ingredients()
-    ui.setupUi(Ingredients)
-    Ingredients.show()
-    sys.exit(app.exec_())

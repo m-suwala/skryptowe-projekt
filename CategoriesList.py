@@ -3,7 +3,9 @@ import api_functions as api
 from recipeWindow import RecipeWindow
 
 class Ui_Categories(object):
-    def setupUi(self, Categories):
+    def setupUi(self, Categories, is_logged, username):
+        self.is_logged = is_logged
+        self.username = username
         Categories.setObjectName("Categories")
         Categories.resize(400, 600)
         Categories.setStyleSheet("background-color: rgb(212, 237, 255);\n"
@@ -42,7 +44,7 @@ class Ui_Categories(object):
         category = self.categories_list.currentItem()
         meals = api.get_meals_by_category(category.text())
         self.window = QtWidgets.QMainWindow()
-        self.recipe = RecipeWindow(self.window, meals, 0, is_meal=False)
+        self.recipe = RecipeWindow(self.window, 0, is_logged=self.is_logged, username=self.username, names=meals)
         self.recipe.load_recipe()
         self.window.show()
 
@@ -51,12 +53,3 @@ class Ui_Categories(object):
         Categories.setWindowTitle(_translate("Categories", "Categories"))
         self.categories_label.setText(_translate("Categories", "Categories:"))
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Categories = QtWidgets.QWidget()
-    ui = Ui_Categories()
-    ui.setupUi(Categories)
-    Categories.show()
-    sys.exit(app.exec_())

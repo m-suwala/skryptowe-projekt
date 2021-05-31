@@ -17,7 +17,7 @@ class Ui_Form(object):
         self.photo_label.setText("")
         self.photo_label.setObjectName("photo_label")
         self.title_label = QtWidgets.QLabel(Form)
-        self.title_label.setGeometry(QtCore.QRect(40, 20, 1531, 91))
+        self.title_label.setGeometry(QtCore.QRect(60, 20, 1511, 91))
         font = QtGui.QFont()
         font.setFamily("Gill Sans MT")
         font.setPointSize(24)
@@ -125,6 +125,17 @@ class Ui_Form(object):
 "border-radius: 5px;")
         self.instructions.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.instructions.setObjectName("instructions")
+        self.fav_button = QtWidgets.QPushButton(Form)
+        self.fav_button.setGeometry(QtCore.QRect(10, 45, 41, 41))
+        self.fav_button.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.fav_button.setText("")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("notfav.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.fav_button.setIcon(icon2)
+        self.fav_button.setIconSize(QtCore.QSize(40, 40))
+        self.fav_button.setCheckable(False)
+        self.fav_button.setFlat(True)
+        self.fav_button.setObjectName("fav_button")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -139,12 +150,3 @@ class Ui_Form(object):
         self.ingredients_label.setText(_translate("Form", "Ingredients:"))
         self.instructions_label_2.setText(_translate("Form", "Instructions:"))
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
-    ui = Ui_Form()
-    ui.setupUi(Form)
-    Form.show()
-    sys.exit(app.exec_())

@@ -1,5 +1,5 @@
 import requests
-
+import random
 
 def get_meals(name):
     try:
@@ -17,6 +17,16 @@ def get_meal(id):
         return meal_info
     except requests.exceptions.MissingSchema:
         return None
+
+
+def get_random_meal_diet(diet):
+    try:
+        meals = get_meals_by_category(diet)
+        r = random.randint(0, len(meals)-1)
+        return [meals[r]]
+    except Exception:
+        return None
+
 
 def get_random_meal():
     try:
@@ -82,6 +92,7 @@ def get_meals_info_list(meal):
     meals_list = []
     if meals:
         for m in meals:
+            id = m['idMeal']
             name = m['strMeal']
             category = m['strCategory']
             cuisine = m['strArea']
@@ -91,12 +102,16 @@ def get_meals_info_list(meal):
             for i in range(1, 21):
                 ingr = m['strIngredient{}'.format(i)]
                 amount = m['strMeasure{}'.format(i)]
+                if ingr is None:
+                    ingr = ""
+                if amount is None:
+                    amount = ""
                 if ingr != "" and amount != "":
                     ingredient = amount + " " + ingr
                     ingredients.append(ingredient)
                 else:
                     break
-            meals_list.append({"name": name, "category": category, "cuisine": cuisine, "ingredients": ingredients, "instructions": instructions, "image": image})
+            meals_list.append({"id": id, "name": name, "category": category, "cuisine": cuisine, "ingredients": ingredients, "instructions": instructions, "image": image})
     return meals_list
 
 
