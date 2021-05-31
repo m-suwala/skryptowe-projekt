@@ -83,21 +83,19 @@ class MainWindow():
 
     def search(self):
         self.hide_errors()
-        try:
-            self.window = QtWidgets.QMainWindow()
-            name = self.ui.search_lineEdit.text()
-            if name != "" and name != " ":
-                meals = api.get_meals(name)
-                if meals:
-                    self.recipe = RecipeWindow(self.window, 0, is_logged=self.is_logged, username=self.username, meals=meals)
-                    self.recipe.load_recipe()
-                    self.window.show()
-                    self.ui.search_lineEdit.clear()
-                else:
-                    self.ui.error_label.setText("Recipes not found")
-                    self.ui.error_label.show()
-        except Exception as e:
-            print(e)
+        self.window = QtWidgets.QMainWindow()
+        name = self.ui.search_lineEdit.text()
+        if name != "" and name != " ":
+            meals = api.get_meals(name)
+            if meals:
+                self.recipe = RecipeWindow(self.window, 0, is_logged=self.is_logged, username=self.username, meals=meals)
+                self.recipe.load_recipe()
+                self.window.show()
+                self.ui.search_lineEdit.clear()
+            else:
+                self.ui.error_label.setText("Recipes not found")
+                self.ui.error_label.show()
+
 
     def log_in(self):
         self.hide_errors()
